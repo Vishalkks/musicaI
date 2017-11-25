@@ -1,2 +1,0 @@
-https://wiki.archlinux.org/index.php/USB_MIDI_keyboards
-http://colinraffel.com/projects/lmd/#get
