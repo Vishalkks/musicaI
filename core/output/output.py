@@ -1,8 +1,10 @@
 import time
+import SharedArray as sa
 def sendOutput():
 	#puts the output to the keyboard, gives the midi output back after reading from shared memory
 	#poll shared mem
-	notesToPlay = [[48,100],[48,100],[48,100],[48,100]]
+	noteToPlay = sa.attach("shm://notes")
+	#notesToPlay = [[48,100],[48,100],[48,100],[48,100]]
 	for note,velo in notesToPlay:
 		out.note_on(note,velocity = velo)
 		time.sleep((60/tempo) * 1000)
