@@ -47,8 +47,9 @@ def getInput():
     while going:
             if i.poll():
                     midi_events = i.read(1)
+                    print(midi_events)
                     if midi_events[0][0][2] != 0:
-                        print(midi_events)
+
                         note = NOTES[midi_events[0][0][1]%12]
                         vel = midi_events[0][0][2]
                         try:
@@ -58,7 +59,7 @@ def getInput():
                             random.shuffle(chords[0])
                             for chordNote in chords[0]:
                                 output.note_on(note2num[chordNote], velocity=100)
-                                time.sleep(0.3)
+                                time.sleep(0.17)
                                 output.note_off(note2num[chordNote], velocity=0)
                         except KeyError:
                             chords = None
