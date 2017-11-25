@@ -54,13 +54,19 @@ def getMidiInput():						#gets midi input, and converts to note
 			next_bar = bar_start + (4*time_interval)
 			next_bar_count = next_bar + (time_interval/2)
 	going = True
+	endCount = 0
     while going:
         if i.poll():
 			midi_events = i.read(1)
 			print(midi_events)
+			if(midi_events[0][0][0] == 248):
+				endCount+=1
+				if(endCount==1000):
+					queue[0] = 0
 			if midi_events[0][1] < next_bar:
 				pass
 			elif midi_events[0][1] > next_bar and midi_events[0][1] < next_bar_count and midi_events[0][0][0] == 144:
+				endCount = 0
 				note = NOTES[midi_events[0][0][1]%12]		       #noteNum % 12
 			    vel = midi_events[0][0][2]
 			    try:
@@ -77,6 +83,8 @@ def getMidiInput():						#gets midi input, and converts to note
 					queue[i] = chords[i]
 				print ("Note: "+note+" Vel:"+str(vel)+" chords found:"+str(chords))
 			else:
+				if midi_events[0][0][0] == 144:
+					endCount = 0
 				chords = list(map(lambda c : [note2num[c],midi_events[0][0][2]],prevChord))
 				for i in range(4):	#number of notes in chord
 					queue[i] = chords[i]
